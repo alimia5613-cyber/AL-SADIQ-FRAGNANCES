@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AL SADIQ ATTAR | صادق عطر</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500;600&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --gold-primary: #D4AF37;
+            --gold-light: #F4E4BC;
+            --gold-dark: #AA8C2C;
+            --deep-black: #0a0a0a;
+            --rich-burgundy: #2C0B0E;
+        }
+        
+        body {
+            font-family: 'Montserrat', 'Noto Naskh Arabic', sans-serif;
+            background-color: var(--deep-black);
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+        
+        .font-display {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        .font-arabic {
+            font-family: 'Noto Naskh Arabic', serif;
+        }
+        
+        .text-gold {
+            color: var(--gold-primary);
+        }
+        
+        .bg-gold {
+            background-color: var(--gold-primary);
+        }
+        
+        .border-gold {
+            border-color: var(--gold-primary);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--deep-black);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold-dark);
+            border-radius: 4px;
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #D4AF37 0%, #F4E4BC 50%, #AA8C2C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Glass Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Page Transitions */
+        .page {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .page.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        /* Product Card Hover */
+        .product-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.1);
+        }
+        
+        /* Navigation Link Effect */
+        .nav-link {
+            position: relative;
+            cursor: pointer;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold-primary);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Loader */
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: var(--deep-black);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease;
+        }
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        /* Cart Badge */
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--gold-primary);
+            color: black;
+            font-size: 0.75rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        /* Size Selector */
+        .size-btn {
+            transition: all 0.3s ease;
+        }
+        .size-btn.active {
+            background: var(--gold-primary);
+            color: black;
+            border-color: var(--gold-primary);
+        }
+        
+        /* Islamic Pattern */
+        .islamic-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="islamic-pattern">
+
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="text-center">
+            <div class="font-arabic text-5xl md:text-7xl gradient-text mb-2 tracking-widest">صادق</div>
+            <div class="font-display text-3xl md:text-4xl gradient-text mb-4 tracking-widest">AL SADIQ</div>
+            <div class="w-32 h-0.5 bg-gray-800 mx-auto overflow-hidden">
+                <div class="h-full bg-gold w-0 transition-all duration-1000" id="loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-500 glass border-b border-white/5" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="cursor-pointer" onclick="showPage('home')">
+                <div class="font-arabic text-2xl md:text-3xl gradient-text tracking-widest">صادق</div>
+                <div class="font-display text-xs md:text-sm tracking-[0.3em] text-gold/80">AL SADIQ ATTAR</div>
+            </div>
+            
+            <div class="hidden md:flex space-x-8 items-center">
+                <span class="nav-link text-sm tracking-widest uppercase hover:text-gold transition-colors active" onclick="showPage('home')" data-page="home">Home</span>
+                <span class="nav-link text-sm tracking-widest uppercase hover:text-gold transition-colors" onclick="showPage('products')" data-page="products">Products</span>
+                <span class="nav-link text-sm tracking-widest uppercase hover:text-gold transition-colors" onclick="showPage('about')" data-page="about">About</span>
+                <span class="nav-link text-sm tracking-widest uppercase hover:text-gold transition-colors" onclick="showPage('contact')" data-page="contact">Contact</span>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button class="relative p-2 hover:text-gold transition-colors" onclick="showPage('cart')">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                    <span class="cart-badge" id="cart-count" style="display: none;">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active pt-24">
+        <!-- Hero Section -->
+        <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-80"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(212,175,55,0.15)_0%,_transparent_70%)]"></div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8 text-center md:text-left">
+                    <div class="space-y-4">
+                        <p class="text-gold tracking-[0.3em] text-sm uppercase">Welcome to Al Sadiq Attar</p>
+                        <h1 class="font-arabic text-6xl md:text-8xl gradient-text leading-tight">صادق</h1>
+                        <h2 class="font-display text-4xl md:text-6xl text-white leading-tight">
+                            Pure Attar <br>
+                            <span class="gradient-text italic">By Sadiq</span>
+                        </h2>
+                        <p class="text-gray-400 text-lg md:text-xl max-w-md leading-relaxed mx-auto md:mx-0">
+                            Assalamu Alaikum! I'm Sadiq, bringing you the finest pure attar oils from the heart of tradition. Experience authentic fragrances that speak to your soul.
+                        </p>
+                    </div>
+                    
+                    <div class="flex gap-4 justify-center md:justify-start">
+                        <button onclick="showPage('products')" class="btn-gold px-8 py-4 bg-gold text-black font-medium tracking-widest uppercase hover:bg-white transition-all duration-300">
+                            View Collection
+                        </button>
+                        <button onclick="showPage('about')" class="px-8 py-4 border border-white/20 text-white tracking-widest uppercase hover:border-gold hover:text-gold transition-all duration-300">
+                            About Me
+                        </button>
+                    </div>
+                </div>
+
+                <div class="relative h-[500px] flex items-center justify-center">
+                    <div class="absolute inset-0 bg-gradient-radial from-gold/20 to-transparent rounded-full blur-3xl animate-pulse"></div>
+                    <div class="relative z-10 animate-float">
+                        <div class="w-72 h-96 rounded-full border-2 border-gold/30 bg-gradient-to-b from-black/60 to-transparent backdrop-blur-sm flex items-center justify-center relative overflow-hidden">
+                            <div class="text-center space-y-4">
+                                <div class="w-40 h-40 mx-auto rounded-full border-4 border-gold/50 flex items-center justify-center bg-black/40">
+                                    <span class="font-arabic text-8xl text-gold">عطر</span>
+                                </div>
+                                <p class="text-gold/80 tracking-[0.5em] text-sm font-arabic">نقي العطر</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products Preview -->
+        <section class="py-20 bg-black/30">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-12">
+                    <p class="text-gold tracking-[0.3em] text-sm uppercase mb-2">Featured Collection</p>
+                    <h3 class="font-display text-3xl md:text-4xl text-white">Best Sellers</h3>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6" id="featured-products">
+                    <!-- Populated by JS -->
+                </div>
+                <div class="text-center mt-12">
+                    <button onclick="showPage('products')" class="btn-gold px-10 py-3 border border-gold text-gold tracking-widest uppercase hover:bg-gold hover:text-black transition-all duration-300">
+                        View All Products
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PRODUCTS PAGE -->
+    <div id="products" class="page pt-24 pb-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12 space-y-4">
+                <p class="text-gold tracking-[0.3em] text-sm uppercase font-arabic">مجموعة العطور</p>
+                <h2 class="font-display text-4xl md:text-5xl gradient-text">Our Collection</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Pure, alcohol-free attar oils. Long-lasting fragrance for the discerning individual.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="products-grid">
+                <!-- Products populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div id="product-modal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="bg-gray-900 border border-gold/20 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gold">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <div id="modal-content" class="p-8">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CART PAGE -->
+    <div id="cart" class="page pt-24 pb-20 min-h-screen">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="font-display text-4xl gradient-text mb-2">Your Cart</h2>
+                <p class="text-gray-400">Review your selections before checkout</p>
+            </div>
+
+            <div id="cart-items" class="space-y-4 mb-8">
+                <!-- Populated by JS -->
+            </div>
+
+            <div id="cart-empty" class="text-center py-20 hidden">
+                <div class="text-6xl mb-4">🛒</div>
+                <h3 class="font-display text-2xl text-white mb-2">Your cart is empty</h3>
+                <p class="text-gray-400 mb-6">Discover our exquisite attar collection</p>
+                <button onclick="showPage('products')" class="btn-gold px-8 py-3 bg-gold text-black tracking-widest uppercase hover:bg-white transition-all">
+                    Browse Products
+                </button>
+            </div>
+
+            <div id="cart-summary" class="glass p-6 rounded-lg border border-gold/10 hidden">
+                <div class="flex justify-between items-center mb-4 text-xl">
+                    <span class="text-gray-300">Total:</span>
+                    <span class="font-display text-2xl text-gold" id="cart-total">PKR 0</span>
+                </div>
+                <button onclick="showCheckout()" class="w-full btn-gold py-4 bg-gold text-black font-bold tracking-widest uppercase hover:bg-white transition-all">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div id="checkout-modal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeCheckout()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4 overflow-y-auto">
+            <div class="bg-gray-900 border border-gold/20 rounded-2xl max-w-lg w-full relative my-8">
+                <button onclick="closeCheckout()" class="absolute top-4 right-4 text-gray-400 hover:text-gold">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <div class="p-8">
+                    <h3 class="font-display text-2xl gradient-text mb-6 text-center">Complete Your Order</h3>
+                    <form id="checkout-form" class="space-y-4" onsubmit="submitOrder(event)">
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Full Name *</label>
+                            <input type="text" name="name" required class="w-full bg-black/50 border border-white/10 rounded px-4 py-3 text-white focus:border-gold focus:outline-none transition-colors" placeholder="Your full name">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Phone Number *</label>
+                            <input type="tel" name="phone" required class="w-full bg-black/50 border border-white/10 rounded px-4 py-3 text-white focus:border-gold focus:outline-none transition-colors" placeholder="03XX-XXXXXXX">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Complete Address *</label>
+                            <textarea name="address" required rows="3" class="w-full bg-black/50 border border-white/10 rounded px-4 py-3 text-white focus:border-gold focus:outline-none transition-colors" placeholder="House #, Street, Area, City"></textarea>
+                        </div>
+                        <div class="border-t border-white/10 pt-4">
+                            <h4 class="text-gold mb-3 text-sm uppercase tracking-widest">Order Summary</h4>
+                            <div id="checkout-summary" class="space-y-2 text-sm text-gray-300 mb-4">
+                                <!-- Populated by JS -->
+                            </div>
+                            <div class="flex justify-between items-center border-t border-white/10 pt-3">
+                                <span class="text-white font-bold">Total Amount:</span>
+                                <span class="font-display text-xl text-gold" id="checkout-total">PKR 0</span>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full btn-gold py-4 bg-gold text-black font-bold tracking-widest uppercase hover:bg-white transition-all flex items-center justify-center gap-2">
+                            <span>Order on WhatsApp</span>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div id="about" class="page pt-24 pb-20">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="font-arabic text-5xl gradient-text mb-4">عن صادق</h2>
+                <h3 class="font-display text-3xl text-white">About Sadiq</h3>
+            </div>
+            
+            <div class="glass p-8 md:p-12 rounded-2xl border border-gold/10 space-y-6">
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    <div class="w-48 h-48 rounded-full border-4 border-gold/30 flex items-center justify-center bg-black/50 flex-shrink-0">
+                        <span class="font-arabic text-6xl text-gold">ص</span>
+                    </div>
+                    <div class="space-y-4 text-center md:text-left">
+                        <h4 class="font-display text-2xl text-gold">Assalamu Alaikum!</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            I'm <strong class="text-gold">Sadiq</strong>, the founder of Al Sadiq Attar. My journey into the world of fragrances began with a deep appreciation for traditional Islamic perfumery and the desire to bring pure, alcohol-free attars to everyone.
+                        </p>
+                        <p class="text-gray-300 leading-relaxed">
+                            Every attar in our collection is carefully selected for its quality, longevity, and authenticity. We believe that fragrance is not just about smelling good—it's about feeling connected to tradition, spirituality, and personal elegance.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6 pt-8 border-t border-white/10">
+                    <div class="text-center p-4">
+                        <div class="text-3xl mb-2">🕌</div>
+                        <h5 class="text-gold font-display text-lg mb-1">100% Pure</h5>
+                        <p class="text-gray-400 text-sm">Alcohol-free traditional attars</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <div class="text-3xl mb-2">✨</div>
+                        <h5 class="text-gold font-display text-lg mb-1">Long Lasting</h5>
+                        <p class="text-gray-400 text-sm">Premium quality oils that endure</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <div class="text-3xl mb-2">🤝</div>
+                        <h5 class="text-gold font-display text-lg mb-1">Trusted</h5>
+                        <p class="text-gray-400 text-sm">Serving with honesty since day one</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="contact" class="page pt-24 pb-20">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="font-display text-4xl gradient-text mb-2">Contact Us</h2>
+                <p class="text-gray-400">Have questions? Reach out directly on WhatsApp</p>
+            </div>
+
+            <div class="glass p-8 rounded-2xl border border-gold/10 text-center space-y-6">
+                <div class="w-20 h-20 mx-auto bg-green-600 rounded-full flex items-center justify-center">
+                    <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                </div>
+                <h3 class="font-display text-2xl text-white">WhatsApp Direct</h3>
+                <p class="text-gray-300">Click below to chat with Sadiq directly</p>
+                <a href="https://wa.me/923296968039" target="_blank" class="inline-block btn-gold px-8 py-4 bg-green-600 text-white font-bold tracking-widest uppercase hover:bg-green-700 transition-all rounded-lg">
+                    Chat on WhatsApp
+                </a>
+                <p class="text-gold font-arabic text-lg pt-4">+92 329 6968039</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/5 py-12 bg-black mt-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div class="space-y-2">
+                    <div class="font-arabic text-2xl gradient-text">صادق عطر</div>
+                    <p class="text-gray-500 text-sm">Pure Attar by Sadiq</p>
+                </div>
+                <div>
+                    <h4 class="text-white uppercase tracking-widest text-xs mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-500 text-sm">
+                        <li><span class="hover:text-gold cursor-pointer" onclick="showPage('home')">Home</span></li>
+                        <li><span class="hover:text-gold cursor-pointer" onclick="showPage('products')">Products</span></li>
+                        <li><span class="hover:text-gold cursor-pointer" onclick="showPage('about')">About</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white uppercase tracking-widest text-xs mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-500 text-sm">
+                        <li>WhatsApp: +92 329 6968039</li>
+                        <li>Sadiq - Founder</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white uppercase tracking-widest text-xs mb-4">Pricing</h4>
+                    <ul class="space-y-2 text-gray-500 text-sm">
+                        <li>3ml - PKR 230</li>
+                        <li>6ml - PKR 600</li>
+                        <li>12ml - PKR 1000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8 text-center text-gray-600 text-sm">
+                <p>&copy; 2024 Al Sadiq Attar by Sadiq. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Product Data with PKR Pricing
+        const products = [
+            {
+                id: 1,
+                name: "HARARE",
+                arabicName: "هراري",
+                description: "Exotic African spices blended with precious sandalwood and golden amber. A warm, mysterious fragrance that commands attention and leaves a lasting impression.",
+                prices: { "3ml": 230, "6ml": 600, "12ml": 1000 },
+                tag: "Bestseller",
+                tagColor: "gold"
+            },
+            {
+                id: 2,
+                name: "GUCCI FLORA",
+                arabicName: "غوتشي فلورا",
+                description: "Delicate peony and rose intertwined with fresh citrus notes and earthy patchouli. A fresh, feminine fragrance that embodies timeless elegance and grace.",
+                prices: { "3ml": 230, "6ml": 600, "12ml": 1000 },
+                tag: "Floral",
+                tagColor: "green"
+            },
+            {
+                id: 3,
+                name: "CREED AVENTUS",
+                arabicName: "كريد أفينتوس",
+                description: "Bold pineapple and birch blend with rich musk and oakmoss. The ultimate scent of success, power, and sophistication for the modern achiever.",
+                prices: { "3ml": 230, "6ml": 600, "12ml": 1000 },
+                tag: "Premium",
+                tagColor: "blue"
+            },
+            {
+                id: 4,
+                name: "WHITE OUD",
+                arabicName: "العود الأبيض",
+                description: "Pure oud wood softened with white musk and creamy vanilla. A spiritual, creamy, and woody fragrance that uplifts the soul and calms the mind.",
+                prices: { "3ml": 230, "6ml": 600, "12ml": 1000 },
+                tag: "Rare",
+                tagColor: "gray"
+            },
+            {
+                id: 5,
+                name: "AMBRE NOMADE",
+                arabicName: "عنبر نوماد",
+                description: "Rich amber resin wrapped in sweet benzoin and sacred incense. A nomadic, warm, and deeply sensual journey through ancient trade routes.",
+                prices: { "3ml": 230, "6ml": 600, "12ml": 1000 },
+                tag: "Oriental",
+                tagColor: "orange"
+            },
+            {
+                id: 6,
+                name: "AVENTUS",
+                arabicName: "أفينتوس",
+                description: "Smoky birch and blackcurrant meet sweet vanilla and ambergris. Bold, distinctive, and absolutely unforgettable signature scent.",
+                prices: { "3ml": 230, "6ml": 600, "12ml": 1000 },
+                tag: "Classic",
+                tagColor: "purple"
+            }
+        ];
+
+        // Cart State
+        let cart = JSON.parse(localStorage.getItem('alsadiq_cart')) || [];
+
+        // Initialize
+        window.addEventListener('load', () => {
+            const loaderBar = document.getElementById('loader-bar');
+            loaderBar.style.width = '100%';
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1200);
+            
+            renderProducts();
+            renderFeatured();
+            updateCartCount();
+        });
+
+        // Page Navigation
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageName).classList.add('active');
+            
+            // Update nav active state
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if(link.dataset.page === pageName) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // Refresh cart if cart page
+            if(pageName === 'cart') {
+                renderCart();
+            }
+        }
+
+        // Render Products
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = products.map(product => `
+                <div class="product-card group cursor-pointer bg-gradient-to-b from-gray-900 to-black border border-white/5 rounded-xl overflow-hidden" onclick="openProductModal(${product.id})">
+                    <div class="relative p-6 h-[400px] flex flex-col">
+                        <div class="absolute top-4 right-4 z-10">
+                            <span class="text-xs text-${product.tagColor}-400 border border-${product.tagColor}-400/30 px-3 py-1 rounded-full bg-black/50">${product.tag}</span>
+                        </div>
+                        <div class="flex-1 flex items-center justify-center relative">
+                            <div class="absolute inset-0 bg-gold/5 rounded-full blur-3xl group-hover:bg-gold/10 transition-all duration-500"></div>
+                            <div class="relative z-10 w-40 h-56 border-2 border-gold/30 rounded-t-full rounded-b-3xl bg-gradient-to-b from-black/80 to-transparent flex items-center justify-center">
+                                <span class="font-arabic text-5xl text-gold/90">${product.arabicName.charAt(0)}</span>
+                            </div>
+                        </div>
+                        <div class="space-y-2 mt-4 text-center">
+                            <h3 class="font-arabic text-2xl text-gold">${product.arabicName}</h3>
+                            <h4 class="font-display text-lg text-white tracking-wider">${product.name}</h4>
+                            <p class="text-gray-400 text-xs line-clamp-2">${product.description}</p>
+                            <div class="pt-3 border-t border-white/10">
+                                <span class="text-gold font-bold">From PKR ${product.prices['3ml']}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Featured (First 3)
+        function renderFeatured() {
+            const container = document.getElementById('featured-products');
+            const featured = products.slice(0, 3);
+            container.innerHTML = featured.map(product => `
+                <div class="product-card group cursor-pointer glass border border-white/5 rounded-xl p-6" onclick="openProductModal(${product.id})">
+                    <div class="flex items-center gap-4">
+                        <div class="w-20 h-20 rounded-full border-2 border-gold/30 flex items-center justify-center bg-black/50 flex-shrink-0">
+                            <span class="font-arabic text-2xl text-gold">${product.arabicName.charAt(0)}</span>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-arabic text-lg text-gold">${product.arabicName}</h4>
+                            <p class="text-white text-sm">${product.name}</p>
+                            <p class="text-gray-400 text-xs mt-1">PKR ${product.prices['3ml']} - ${product.prices['12ml']}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Open Product Modal
+        let currentProduct = null;
+        let currentSize = '3ml';
+
+        function openProductModal(productId) {
+            currentProduct = products.find(p => p.id === productId);
+            currentSize = '3ml';
+            
+            const modal = document.getElementById('product-modal');
+            const content = document.getElementById('modal-content');
+            
+            content.innerHTML = `
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="flex items-center justify-center">
+                        <div class="w-64 h-80 border-2 border-gold/30 rounded-t-full rounded-b-3xl bg-gradient-to-b from-gray-800 to-black flex items-center justify-center">
+                            <div class="text-center">
+                                <span class="font-arabic text-7xl text-gold block mb-2">${currentProduct.arabicName.charAt(0)}</span>
+                                <span class="font-arabic text-2xl text-gold/60">${currentProduct.arabicName}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <h2 class="font-arabic text-3xl text-gold mb-1">${currentProduct.arabicName}</h2>
+                            <h3 class="font-display text-2xl text-white">${currentProduct.name}</h3>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">${currentProduct.description}</p>
+                        
+                        <div class="space-y-3">
+                            <label class="text-xs uppercase tracking-widest text-gray-400">Select Size</label>
+                            <div class="flex gap-3">
+                                ${Object.entries(currentProduct.prices).map(([size, price]) => `
+                                    <button onclick="selectSize('${size}')" 
+                                        class="size-btn flex-1 py-3 border border-white/20 rounded-lg text-sm ${size === currentSize ? 'active' : 'text-gray-300 hover:border-gold'}">
+                                        <div class="font-bold">${size}</div>
+                                        <div class="text-xs mt-1">PKR ${price}</div>
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between pt-4 border-t border-white/10">
+                            <div>
+                                <span class="text-gray-400 text-sm">Total:</span>
+                                <div class="font-display text-3xl text-gold" id="modal-price">PKR ${currentProduct.prices[currentSize]}</div>
+                            </div>
+                            <button onclick="addToCart()" class="btn-gold px-8 py-4 bg-gold text-black font-bold tracking-widest uppercase hover:bg-white transition-all">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+        }
+
+        function selectSize(size) {
+            currentSize = size;
+            document.querySelectorAll('.size-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('text-gray-300');
+            });
+            event.target.closest('.size-btn').classList.add('active');
+            event.target.closest('.size-btn').classList.remove('text-gray-300');
+            document.getElementById('modal-price').textContent = `PKR ${currentProduct.prices[size]}`;
+        }
+
+        function closeModal() {
+            document.getElementById('product-modal').classList.add('hidden');
+        }
+
+        // Add to Cart
+        function addToCart() {
+            const existingItem = cart.find(item => item.id === currentProduct.id && item.size === currentSize);
+            
+            if(existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: currentProduct.id,
+                    name: currentProduct.name,
+                    arabicName: currentProduct.arabicName,
+                    size: currentSize,
+                    price: currentProduct.prices[currentSize],
+                    quantity: 1
+                });
+            }
+            
+            saveCart();
+            updateCartCount();
+            closeModal();
+            
+            // Show success message
+            alert(`${currentProduct.arabicName} (${currentSize}) added to cart!`);
+        }
+
+        // Save Cart
+        function saveCart() {
+            localStorage.setItem('alsadiq_cart', JSON.stringify(cart));
+        }
+
+        // Update Cart Count
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const badge = document.getElementById('cart-count');
+            if(count > 0) {
+                badge.textContent = count;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        // Render Cart
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            const emptyState = document.getElementById('cart-empty');
+            const summary = document.getElementById('cart-summary');
+            
+            if(cart.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                summary.classList.add('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            summary.classList.remove('hidden');
+            
+            let total = 0;
+            
+            container.innerHTML = cart.map((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                return `
+                    <div class="glass p-4 rounded-lg border border-white/5 flex items-center gap-4">
+                        <div class="w-16 h-16 rounded-full border border-gold/30 flex items-center justify-center bg-black/50">
+                            <span class="font-arabic text-xl text-gold">${item.arabicName.charAt(0)}</span>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-arabic text-lg text-gold">${item.arabicName}</h4>
+                            <p class="text-white text-sm">${item.name} - ${item.size}</p>
+                            <p class="text-gray-400 text-sm">PKR ${item.price} x ${item.quantity}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-display text-xl text-gold">PKR ${itemTotal}</p>
+                            <button onclick="removeFromCart(${index})" class="text-red-400 text-xs hover:text-red-300 mt-1">Remove</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('cart-total').textContent = `PKR ${total}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCart();
+            updateCartCount();
+            renderCart();
+        }
+
+        // Checkout
+        function showCheckout() {
+            const modal = document.getElementById('checkout-modal');
+            const summary = document.getElementById('checkout-summary');
+            const total = document.getElementById('checkout-total');
+            
+            let orderTotal = 0;
+            summary.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.quantity;
+                orderTotal += itemTotal;
+                return `
+                    <div class="flex justify-between">
+                        <span>${item.arabicName} (${item.size}) x${item.quantity}</span>
+                        <span>PKR ${itemTotal}</span>
+                    </div>
+                `;
+            }).join('');
+            
+            total.textContent = `PKR ${orderTotal}`;
+            modal.classList.remove('hidden');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        // Submit Order to WhatsApp
+        function submitOrder(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const name = formData.get('name');
+            const phone = formData.get('phone');
+            const address = formData.get('address');
+            
+            let orderDetails = `*New Order from Al Sadiq Attar*%0A%0A`;
+            orderDetails += `*Customer:* ${name}%0A`;
+            orderDetails += `*Phone:* ${phone}%0A`;
+            orderDetails += `*Address:* ${address}%0A%0A`;
+            orderDetails += `*Order Details:*%0A`;
+            
+            let total = 0;
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                orderDetails += `• ${item.arabicName} (${item.name}) - ${item.size} x${item.quantity} = PKR ${itemTotal}%0A`;
+            });
+            
+            orderDetails += `%0A*Total Amount: PKR ${total}*%0A%0A`;
+            orderDetails += `Jazakallah Khair!`;
+            
+            const whatsappUrl = `https://wa.me/923296968039?text=${orderDetails}`;
+            window.open(whatsappUrl, '_blank');
+            
+            // Clear cart
+            cart = [];
+            saveCart();
+            updateCartCount();
+            closeCheckout();
+            showPage('home');
+            
+            alert('Thank you! Your order details have been sent to Sadiq on WhatsApp. You will be contacted shortly.');
+        }
+
+        // Close modals on escape key
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'Escape') {
+                closeModal();
+                closeCheckout();
+            }
+        });
+    </script>
+</body>
+</html>
